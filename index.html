@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Her Story - Cinematic 7 Albums</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins&display=swap');
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:radial-gradient(circle,#ffe6f0,#ffd1dc);
+    color:#b3003b;
+    overflow-x:hidden;
+}
+
+/* LOADING */
+#loading{
+    position:fixed;width:100%;height:100%;
+    background:#ffccd5;
+    display:flex;flex-direction:column;
+    justify-content:center;align-items:center;
+    z-index:9999;
+}
+.loader{
+    width:60px;height:60px;
+    border:6px solid white;
+    border-top:6px solid #b3003b;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+@keyframes spin{100%{transform:rotate(360deg);}}
+
+/* TABS */
+.tabs{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    background:#fff0f5;
+    padding:10px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+.tab-btn{
+    margin:5px;
+    padding:10px 15px;
+    border:none;
+    background:#b3003b;
+    color:white;
+    border-radius:20px;
+    cursor:pointer;
+}
+.tab-btn.active{background:#ff3366;}
+
+/* ALBUMS */
+.album{
+    display:none;
+    padding:30px 15px;
+    animation:fade 0.8s ease;
+}
+.album.active{display:block;}
+@keyframes fade{ from{opacity:0; transform:scale(0.98);} to{opacity:1; transform:scale(1);} }
+
+.album h2{
+    font-family:'Playfair Display';
+    margin-bottom:15px;
+    text-align:center;
+}
+
+/* GRID FOR IMAGES */
+.album .grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+    gap:15px;
+    justify-items:center;
+}
+.album .grid div{
+    text-align:center;
+}
+.album .grid img{
+    width:100%;
+    max-width:180px;
+    border-radius:20px;
+    border:5px solid #ff99cc;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    transition:0.3s;
+}
+.album .grid img:hover{ transform:scale(1.05); }
+.caption{ font-size:14px; margin-top:5px; }
+
+/* FLOATING HEARTS & FLOWERS */
+.heart,.flower{
+    position:fixed;
+    font-size:24px;
+    pointer-events:none;
+    z-index:1;
+    animation:floatUp linear infinite;
+}
+.heart{ animation-duration:12s; }
+.flower{ animation-duration:15s; }
+@keyframes floatUp{
+    0%{ transform:translateY(100vh) rotate(0deg); opacity:0; }
+    20%{ opacity:1; }
+    100%{ transform:translateY(-120vh) rotate(360deg); opacity:0; }
+}
+
+/* MUSIC BUTTON */
+.music-btn{
+    position:fixed;
+    top:10px;
+    right:10px;
+    background:#b3003b;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    z-index:9999;
+    cursor:pointer;
+}
+
+/* STORY MODE */
+.story-btn{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#ff3366;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:50px;
+    z-index:9999;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOADING -->
+<div id="loading">
+<div class="loader"></div>
+<p>Loading Her Story...</p>
+</div>
+
+<!-- MUSIC -->
+<audio id="music" autoplay loop>
+<source src="romantic_song.mp3">
+</audio>
+<button class="music-btn" onclick="document.getElementById('music').play()">🎵 Music</button>
+
+<!-- FLOATING HEARTS -->
+<div class="heart" style="left:10%;animation-delay:0s;">❤️</div>
+<div class="heart" style="left:25%;animation-delay:2s;">💖</div>
+<div class="heart" style="left:40%;animation-delay:4s;">💕</div>
+<div class="heart" style="left:60%;animation-delay:1s;">💗</div>
+<div class="heart" style="left:80%;animation-delay:3s;">❤️</div>
+
+<!-- FLOATING FLOWERS -->
+<div class="flower" style="left:15%;animation-delay:0s;">🌸</div>
+<div class="flower" style="left:35%;animation-delay:2s;">🌹</div>
+<div class="flower" style="left:55%;animation-delay:4s;">🌺</div>
+<div class="flower" style="left:75%;animation-delay:1s;">🌷</div>
+<div class="flower" style="left:90%;animation-delay:3s;">🌸</div>
+
+<!-- TABS -->
+<div class="tabs">
+<button class="tab-btn active" onclick="showTab(0)">Childhood</button>
+<button class="tab-btn" onclick="showTab(1)">School</button>
+<button class="tab-btn" onclick="showTab(2)">College</button>
+<button class="tab-btn" onclick="showTab(3)">Father</button>
+<button class="tab-btn" onclick="showTab(4)">Love</button>
+<button class="tab-btn" onclick="showTab(5)">Eid</button>
+<button class="tab-btn" onclick="showTab(6)">Jaan Ho Meri</button>
+</div>
+
+<!-- EXAMPLE ALBUM WITH GRID -->
+<div class="album active">
+<h2>Childhood Memories 🧒</h2>
+<div class="grid">
+    <div><img src="child1.jpg"><div class="caption">“Masoom si muskaan, duniya se bekhabar ❤️🌸”</div></div>
+    <div><img src="child2.jpg"><div class="caption">“Chhoti si duniya, badi si khushiyan 🌼💖”</div></div>
+</div>
+</div>
+
+<div class="album">
+<h2>School Days 🏫</h2>
+<div class="grid">
+    <div><img src="school1.jpg"><div class="caption">“School ka aakhri din par dostian aur yaadein hamesha rahain gi 💖📚”</div></div>
+    <div><img src="school2.jpg"><div class="caption">“Kuch yaadein kabhi purani nahi hoti 🌸📖”</div></div>
+</div>
+</div>
+
+<div class="album">
+<h2>College Life 🎓</h2>
+<div class="grid">
+    <div><img src="college1.jpg"><div class="caption">“Zindagi serious ho gaii par aap ab bhi khoobsuratt ❤️🌹”</div></div>
+    <div><img src="college2.jpg"><div class="caption">“Sapne bade ho rahe hnn aurr hm b saath mn 💌🎓”</div></div>
+</div>
+</div>
+
+<div class="album">
+<h2>Father's Love 👨‍👧</h2>
+<div class="grid">
+    <div><img src="father1.jpg"><div class="caption">“Baba kii duaon mein hi betiyan mehfooz hoti hain 🤲💖‍”</div></div>
+    <div><img src="father2.jpg"><div class="caption">“Baba ka pyar khusnaseeb betiun ko hi milta haa ❤️👨‍👧✨”</div></div>
+</div>
+</div>
+
+<div class="album">
+<h2>Our Story 💖</h2>
+<div class="grid">
+    <div><img src="photo1.jpg"><div class="caption">“Pehli nazar aur aap pehlii nazar mn hii meri mohabbat ban gayin 💕”</div></div>
+    <div><img src="photo2.jpg"><div class="caption">“Phir dheere dheere aap merii duniyaa bn gayin 💖”</div></div>
+    <div><img src="ai_collage.jpg"><div class="caption">“Ya pic to Ai ha pr feelings real hnn jo hmara dilun mn hn 💌”</div></div>
+</div>
+</div>
+
+<div class="album">
+<h2>Eid Special 🌙</h2>
+<div class="grid">
+    <div><img src="eid.jpg"><div class="caption">“Chaand bhi haseen ha pr mera chand sa kahan ✨🌙”</div></div>
+    <div><img src="eid2.jpg"><div class="caption">“Surkh libaas mein aap bilkull shehzaadi lag rhii hn ❤️”</div></div>
+</div>
+</div>
+
+<div class="album">
+<h2>Jaan Ho Meri 💫</h2>
+<div class="grid">
+    <div><img src="love1.jpg"><div class="caption">“Tum toh chand 🌙💖”</div></div>
+    <div><img src="love2.jpg"><div class="caption">“Tum se meri chandni 🌸🌙”</div></div>
+    <div><img src="love3.jpg"><div class="caption">“Main tere bin hun kiaa 💔”</div></div>
+    <div><img src="love4.jpg"><div class="caption">“Tum ho pyaar aakhri ❤️”</div></div>
+</div>
+</div>
+<!-- LOVE QUOTE -->
+<div style="text-align:center; margin:25px 15px; font-size:18px; font-weight:bold; color:#b3003b; font-family:'Playfair Display', serif;">
+💖 Tum toh jaan ho meri 💖
+</div>
+<!-- SECOND LOVE QUOTE -->
+<div style="text-align:center; margin:15px 15px 35px 15px; font-size:16px; font-style:italic; color:#ff3366; font-family:'Poppins', sans-serif;">
+Every picture here carries a story… but every story reminds me of you 💖
+</div>
+
+<!-- STORY BUTTON -->
+<button class="story-btn" onclick="togglePlay()">▶ / ⏸ Story Mode</button>
+
+<script>
+window.onload=()=>{ document.getElementById("loading").style.display="none"; }
+
+// Tabs
+let currentTab=0;
+let currentSlide=0;
+
+function showTab(i){
+    let albums=document.querySelectorAll(".album");
+    let buttons=document.querySelectorAll(".tab-btn");
+
+    albums.forEach(a=>a.classList.remove("active"));
+    buttons.forEach(b=>b.classList.remove("active"));
+
+    albums[i].classList.add("active");
+    buttons[i].classList.add("active");
+    currentTab=i;
+    currentSlide=0;
+    updateSlides();
+}
+
+// Slides
+let autoPlay=true;
+let time=6000;
+
+function getSlides(){
+    let albums=document.querySelectorAll(".album");
+    return albums[currentTab].querySelectorAll("img");
+}
+
+function updateSlides(){
+    let slides=getSlides();
+    slides.forEach((img,i)=>{
+        img.style.display=(i===currentSlide)?"block":"none";
+    });
+}
+
+function nextSlide(){
+    let slides=getSlides();
+    currentSlide++;
+    if(currentSlide>=slides.length){ currentSlide=0; nextTab(); }
+    updateSlides();
+}
+
+function nextTab(){
+    currentTab++;
+    let albums=document.querySelectorAll(".album");
+    if(currentTab>=albums.length){ currentTab=0; }
+    showTab(currentTab);
+    updateSlides();
+}
+
+function togglePlay(){ autoPlay=!autoPlay; }
+
+setInterval(()=>{ if(autoPlay) nextSlide(); }, time);
+
+// Swipe
+let startX=0;
+document.addEventListener('touchstart',e=>startX=e.touches[0].clientX);
+document.addEventListener('touchend',e=>{
+    let endX=e.changedTouches[0].clientX;
+    if(startX-endX>50) nextSlide();
+    if(endX-startX>50){ currentSlide--; if(currentSlide<0) currentSlide=0; updateSlides(); }
+});
+
+// Keyboard
+document.addEventListener('keydown',e=>{
+    if(e.key==="ArrowRight") nextSlide();
+    if(e.key==="ArrowLeft"){ currentSlide--; if(currentSlide<0) currentSlide=0; updateSlides(); }
+});
+</script>
+
+</body>
+</html>
